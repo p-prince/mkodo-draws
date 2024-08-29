@@ -4,7 +4,7 @@ struct DrawsView: View {
     @StateObject private var viewModel: DrawsViewModel
     
     init(drawsService: DrawsService) {
-        _viewModel = StateObject(wrappedValue: DrawsViewModel(drawsService: drawsService))
+        _viewModel = StateObject(wrappedValue: DrawsViewModel(drawsService: drawsService, cacheKey: "cacheKey"))
     }
     
     var body: some View {
@@ -14,7 +14,7 @@ struct DrawsView: View {
                     Section(header: Text(gameName)) {
                         if let draws = viewModel.groupedDraws[gameName] {
                             ForEach(draws, id: \.id) { draw in
-                                NavigationLink(destination: DrawDetailView(draw: draw)) {
+                                NavigationLink(destination: DrawDetailView(viewModel: DrawDetailViewModel(draw: draw))) {
                                     VStack(alignment: .leading) {
                                         Text(draw.drawDate)
                                             .font(.subheadline)

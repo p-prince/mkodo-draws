@@ -14,7 +14,23 @@ struct Draw: Codable, Identifiable {
     let number6: String?
     let bonusBalls: [String]?
     let topPrize: Int
+
+    enum CodingKeys: String, CodingKey {
+        case gameId = "gameId"
+        case gameName = "gameName"
+        case id = "id"
+        case drawDate = "drawDate"
+        case number1 = "number1"
+        case number2 = "number2"
+        case number3 = "number3"
+        case number4 = "number4"
+        case number5 = "number5"
+        case number6 = "number6"
+        case bonusBalls = "bonus-balls"
+        case topPrize = "topPrize"
+    }
 }
+
 
 // MARK: - DrawsResponse Model
 struct DrawsResponse: Codable {

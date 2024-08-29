@@ -1,0 +1,50 @@
+import SwiftUI
+import Combine
+
+class MyTicketsViewModel: ObservableObject {
+    @Published var ticketNumbers: [String] = []
+    @Published var isWinningTicket: Bool = false
+    
+    private var draw: Draw
+    
+    init(draw: Draw) {
+        self.draw = draw
+        generateTicket()
+        checkIfWinningTicket()
+    }
+    
+    private var mainDrawNumbers: [String] {
+        let drawNumbers = [draw.number1, draw.number2, draw.number3, draw.number4, draw.number5, draw.number6]
+            .compactMap { $0 }
+        return drawNumbers
+    }
+    
+    private var bonusDrawNumbers: [String] {
+        return draw.bonusBalls ?? []
+    }
+    
+    func generateTicket() {
+        var numbers = Set<Int>()
+        while numbers.count < 6 {
+            numbers.insert(Int.random(in: 1...59))
+        }
+        ticketNumbers = numbers.sorted().map { String($0) }
+    }
+    
+    func checkIfWinningTicket() {
+        let ticketSet = Set(ticketNumbers.compactMap { $0 })
+        let mainDrawSet = Set(mainDrawNumbers.compactMap { $0 })
+        let matchingNumbers = ticketSet.intersection(mainDrawSet)
+        
+        // Define your winning logic:
+        // Example: For the jackpot, you must match all 6 main numbers
+        isWinningTicket = (matchingNumbers.count == mainDrawSet.count)
+        
+        // Additional logic can be added for lower-tier prizes
+        // Example: if matchingNumbers.count == 5 && some bonus ball matches, that could be a lower-tier prize
+    }
+    
+    func isNumberMatching(_ number: String) -> Bool {
+        return mainDrawNumbers.contains(number) || bonusDrawNumbers.contains(number)
+    }
+}

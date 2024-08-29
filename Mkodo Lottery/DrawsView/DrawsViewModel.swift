@@ -1,17 +1,33 @@
 import SwiftUI
 import Combine
 
-class DrawsViewModel: ObservableObject {
+protocol DrawsViewModelType: ObservableObject {
+    var groupedDraws: [String: [Draw]] { get }
+
+    func fetchDraws()
+}
+
+class DrawsViewModel: DrawsViewModelType {
     @Published var groupedDraws: [String: [Draw]] = [:]
     
     private var drawsService: DrawsService
     private var cancellables = Set<AnyCancellable>()
+    private var cacheKey: String
     
-    init(drawsService: DrawsService) {
+    init(drawsService: DrawsService, cacheKey: String) {
         self.drawsService = drawsService
+        self.cacheKey = cacheKey
     }
     
     func fetchDraws() {
+        if let cachedDraws = DataManager.shared.loadCachedDraws(forKey: cacheKey) {
+            self.groupedDraws = cachedDraws
+        } else {
+            fetchDrawsFromNetwork()
+        }
+    }
+    
+    private func fetchDrawsFromNetwork() {
         drawsService.fetchDraws()
             .map { draws in
                 self.groupAndSortDraws(draws)
@@ -26,11 +42,12 @@ class DrawsViewModel: ObservableObject {
                 }
             }, receiveValue: { groupedDraws in
                 self.groupedDraws = groupedDraws
+                DataManager.shared.saveDraws(groupedDraws, forKey: self.cacheKey)
             })
             .store(in: &cancellables)
     }
     
-    func groupAndSortDraws(_ draws: [Draw]) -> [String: [Draw]] {
+    private func groupAndSortDraws(_ draws: [Draw]) -> [String: [Draw]] {
         // Group by game name
         var groupedDraws = Dictionary(grouping: draws, by: { $0.gameName })
         

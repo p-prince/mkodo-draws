@@ -1,56 +1,86 @@
 import SwiftUI
 
 struct DrawDetailView: View {
-    let draw: Draw
-    
+    @ObservedObject var viewModel: DrawDetailViewModel
+    let columns: [GridItem] = Array(repeating: GridItem(.flexible()), count: 3)
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            Text(draw.gameName)
-                .font(.title)
-                .bold()
-            
-            Text("Draw Date: \(draw.drawDate)")
-                .font(.subheadline)
-            
-            VStack(alignment: .leading, spacing: 8) {
-                Text("Lottery Balls:")
-                    .font(.headline)
+        ScrollView {
+            VStack(alignment: .leading, spacing: 16) {
+                Text(viewModel.draw.gameName)
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding(.bottom, 8)
                 
-                HStack {
-                    ForEach(sortedLotteryBalls(), id: \.self) { ball in
-                        Text(ball)
-                            .font(.title2)
-                            .padding()
-                            .background(Color.blue.opacity(0.1))
-                            .cornerRadius(8)
+                Text("Draw Date: \(viewModel.draw.drawDate)")
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
+                    .padding(.bottom, 20)
+                
+                VStack(alignment: .leading, spacing: 12) {
+                    Text("Lottery Balls:")
+                        .font(.headline)
+                    
+                    LazyVGrid(columns: columns, spacing: 12) {
+                        ForEach(viewModel.sortedLotteryBalls(), id: \.self) { ball in
+                            Text(ball)
+                                .font(.title2)
+                                .fontWeight(.semibold)
+                                .frame(minWidth: 60, minHeight: 60)
+                                .background(Color.blue.opacity(0.2))
+                                .foregroundColor(.blue)
+                                .clipShape(Circle())
+                        }
                     }
                 }
-            }
-            
-            VStack(alignment: .leading, spacing: 8) {
-                Text("Bonus Balls:")
-                    .font(.headline)
+                .padding()
                 
-                HStack {
-                    ForEach(draw.bonusBalls ?? [], id: \.self) { bonusBall in
-                        Text(bonusBall)
-                            .font(.title2)
-                            .padding()
-                            .background(Color.green.opacity(0.1))
-                            .cornerRadius(8)
+                VStack(alignment: .leading, spacing: 12) {
+                    Text("Bonus Balls:")
+                        .font(.headline)
+                    
+                    LazyVGrid(columns: columns, spacing: 12) {
+                        ForEach(viewModel.bonusBalls(), id: \.self) { ball in
+                            Text(ball)
+                                .font(.title2)
+                                .fontWeight(.semibold)
+                                .frame(minWidth: 60, minHeight: 60)
+                                .background(Color.orange.opacity(0.2))
+                                .foregroundColor(.orange)
+                                .clipShape(Circle())
+                        }
                     }
                 }
+                .padding()
+                
+                MyTicketsView(viewModel: MyTicketsViewModel(draw: viewModel.draw))
+                
+                Spacer(minLength: 40)
             }
-            
-            Spacer()
+            .padding()
+            .navigationTitle("Draw Details")
         }
-        .padding()
-        .navigationTitle("Draw Details")
+        .background(Color(.systemGroupedBackground))
     }
-    
-    // Helper method to sort the lottery balls
-    private func sortedLotteryBalls() -> [String] {
-        let balls = [draw.number1, draw.number2, draw.number3, draw.number4, draw.number5, draw.number6].compactMap { $0 }
-        return balls.sorted()
+}
+
+struct DrawDetailView_Previews: PreviewProvider {
+    static var previews: some View {
+        let sampleDraw = Draw(
+            gameId: 1,
+            gameName: "Lotto",
+            id: "1",
+            drawDate: "2023-05-15",
+            number1: "2",
+            number2: "16",
+            number3: "23",
+            number4: "44",
+            number5: "47",
+            number6: "52",
+            bonusBalls: ["14"],
+            topPrize: 4000000000
+        )
+        let viewModel = DrawDetailViewModel(draw: sampleDraw)
+        DrawDetailView(viewModel: viewModel)
     }
 }
