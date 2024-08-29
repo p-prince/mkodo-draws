@@ -1,33 +1,19 @@
 import SwiftUI
 
+// MARK: - DrawsView
+
 struct DrawsView: View {
     @StateObject private var viewModel: DrawsViewModel
     
-    init(drawsService: DrawsService) {
-        _viewModel = StateObject(wrappedValue: DrawsViewModel(drawsService: drawsService, cacheKey: "cacheKey"))
+    init(viewModel: DrawsViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
     }
+    
     
     var body: some View {
         NavigationView {
-            List {
-                ForEach(viewModel.groupedDraws.keys.sorted(), id: \.self) { gameName in
-                    Section(header: Text(gameName)) {
-                        if let draws = viewModel.groupedDraws[gameName] {
-                            ForEach(draws, id: \.id) { draw in
-                                NavigationLink(destination: DrawDetailView(viewModel: DrawDetailViewModel(draw: draw))) {
-                                    VStack(alignment: .leading) {
-                                        Text(draw.drawDate)
-                                            .font(.subheadline)
-                                        Text(draw.gameName)
-                                            .font(.headline)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            .navigationTitle("Lottery Draws")
+            DrawListView(groupedDraws: viewModel.groupedDraws)
+                .navigationTitle("Lottery Draws")
         }
         .onAppear {
             viewModel.fetchDraws()
@@ -35,6 +21,54 @@ struct DrawsView: View {
     }
 }
 
+// MARK: - DrawListView
+
+struct DrawListView: View {
+    let groupedDraws: [String: [Draw]]
+
+    var body: some View {
+        List {
+            ForEach(groupedDraws.keys.sorted(), id: \.self) { gameName in
+                DrawSectionView(gameName: gameName, draws: groupedDraws[gameName] ?? [])
+            }
+        }
+    }
+}
+
+// MARK: - DrawSectionView
+
+struct DrawSectionView: View {
+    let gameName: String
+    let draws: [Draw]
+    
+    var body: some View {
+        Section(header: Text(gameName)) {
+            ForEach(draws, id: \.id) { draw in
+                DrawRowView(draw: draw)
+            }
+        }
+    }
+}
+
+// MARK: - DrawRowView
+
+struct DrawRowView: View {
+    let draw: Draw
+    
+    var body: some View {
+        NavigationLink(destination: DrawDetailView(viewModel: DrawDetailViewModel(draw: draw))) {
+            VStack(alignment: .leading) {
+                Text(draw.drawDate)
+                    .font(.subheadline)
+                Text(draw.gameName)
+                    .font(.headline)
+            }
+        }
+    }
+}
+
+// MARK: - Preview
+
 #Preview {
-    DrawsView(drawsService: MockDrawsService())
+    DrawsView(viewModel: DrawsViewModel(drawsService: MockDrawsService(), cacheKey: "cacheKey"))
 }

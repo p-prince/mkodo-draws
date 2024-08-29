@@ -146,11 +146,11 @@
 			isa = PBXGroup;
 			children = (
 				A33EA8EE2C7DEEB4002BC5C2 /* Mkodo_LotteryApp.swift */,
-				A3299A562C80B66100F6612F /* MyTickets */,
 				A33EA9302C7E24A9002BC5C2 /* Service */,
 				A33EA9312C7E24DF002BC5C2 /* Model */,
 				A33EA92D2C7E2424002BC5C2 /* Draws */,
 				A33EA9322C7E24F0002BC5C2 /* DrawsDetail */,
+				A3299A562C80B66100F6612F /* MyTickets */,
 				A3299A572C80B68D00F6612F /* DataManger */,
 				A33EA92B2C7E23DE002BC5C2 /* MockDrawsService.swift */,
 				A33EA9222C7DFE34002BC5C2 /* draws.json */,
