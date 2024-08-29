@@ -12,8 +12,14 @@ struct DrawsView: View {
     
     var body: some View {
         NavigationView {
-            DrawListView(groupedDraws: viewModel.groupedDraws)
-                .navigationTitle("Lottery Draws")
+            VStack {
+                if let errorMessage = viewModel.errorMessage {
+                    Text(errorMessage)
+                        .foregroundColor(.red)
+                }
+                DrawListView(groupedDraws: viewModel.groupedDraws)
+                    .navigationTitle("Lottery Draws")
+            }
         }
         .onAppear {
             viewModel.fetchDraws()

@@ -3,24 +3,28 @@ import Combine
 
 protocol DrawsViewModelType: ObservableObject {
     var groupedDraws: [String: [Draw]] { get }
+    var errorMessage: String? { get }
 
     func fetchDraws()
 }
 
 class DrawsViewModel: DrawsViewModelType {
     @Published var groupedDraws: [String: [Draw]] = [:]
-    
+    @Published var errorMessage: String?
+
     private var drawsService: DrawsService
+    private var dataManager: DataManagerType
     private var cancellables = Set<AnyCancellable>()
     private var cacheKey: String
     
-    init(drawsService: DrawsService, cacheKey: String) {
+    init(drawsService: DrawsService, dataManager: DataManagerType = DataManager.shared, cacheKey: String) {
         self.drawsService = drawsService
+        self.dataManager = dataManager
         self.cacheKey = cacheKey
     }
     
     func fetchDraws() {
-        if let cachedDraws = DataManager.shared.loadCachedDraws(forKey: cacheKey) {
+        if let cachedDraws = dataManager.loadCachedDraws(forKey: cacheKey) {
             self.groupedDraws = cachedDraws
         } else {
             fetchDrawsFromNetwork()
@@ -36,13 +40,13 @@ class DrawsViewModel: DrawsViewModelType {
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .failure(let error):
-                    print("Error fetching draws: \(error)")
+                    self.errorMessage = "Error fetching draws: \(error.localizedDescription)"
                 case .finished:
                     break
                 }
             }, receiveValue: { groupedDraws in
                 self.groupedDraws = groupedDraws
-                DataManager.shared.saveDraws(groupedDraws, forKey: self.cacheKey)
+                self.dataManager.saveDraws(groupedDraws, forKey: self.cacheKey)
             })
             .store(in: &cancellables)
     }

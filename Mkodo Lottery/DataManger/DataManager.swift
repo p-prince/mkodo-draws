@@ -1,6 +1,13 @@
 import Foundation
 
-class DataManager {
+protocol DataManagerType {
+    func saveDraws(_ groupedDraws: [String: [Draw]], forKey key: String)
+    func loadCachedDraws(forKey key: String) -> [String: [Draw]]?
+    func removeCachedDraws(forKey key: String)
+}
+
+
+class DataManager: DataManagerType {
     
     static let shared = DataManager()
     

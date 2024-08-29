@@ -2,56 +2,28 @@ import SwiftUI
 
 struct DrawDetailView: View {
     @ObservedObject var viewModel: DrawDetailViewModel
-    let columns: [GridItem] = Array(repeating: GridItem(.flexible()), count: 3)
-
+    private let columns: [GridItem] = Array(repeating: GridItem(.flexible()), count: 3)
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                Text(viewModel.draw.gameName)
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .padding(.bottom, 8)
+                DrawInfoView(draw: viewModel.draw)
                 
-                Text("Draw Date: \(viewModel.draw.drawDate)")
-                    .font(.subheadline)
-                    .foregroundColor(.gray)
-                    .padding(.bottom, 20)
+                BallsSectionView(
+                    title: "Lottery Balls",
+                    balls: viewModel.sortedLotteryBalls(),
+                    ballColor: Color.blue,
+                    backgroundColor: Color.blue.opacity(0.2),
+                    columns: columns
+                )
                 
-                VStack(alignment: .leading, spacing: 12) {
-                    Text("Lottery Balls:")
-                        .font(.headline)
-                    
-                    LazyVGrid(columns: columns, spacing: 12) {
-                        ForEach(viewModel.sortedLotteryBalls(), id: \.self) { ball in
-                            Text(ball)
-                                .font(.title2)
-                                .fontWeight(.semibold)
-                                .frame(minWidth: 60, minHeight: 60)
-                                .background(Color.blue.opacity(0.2))
-                                .foregroundColor(.blue)
-                                .clipShape(Circle())
-                        }
-                    }
-                }
-                .padding()
-                
-                VStack(alignment: .leading, spacing: 12) {
-                    Text("Bonus Balls:")
-                        .font(.headline)
-                    
-                    LazyVGrid(columns: columns, spacing: 12) {
-                        ForEach(viewModel.bonusBalls(), id: \.self) { ball in
-                            Text(ball)
-                                .font(.title2)
-                                .fontWeight(.semibold)
-                                .frame(minWidth: 60, minHeight: 60)
-                                .background(Color.orange.opacity(0.2))
-                                .foregroundColor(.orange)
-                                .clipShape(Circle())
-                        }
-                    }
-                }
-                .padding()
+                BallsSectionView(
+                    title: "Bonus Balls",
+                    balls: viewModel.bonusBalls(),
+                    ballColor: Color.orange,
+                    backgroundColor: Color.orange.opacity(0.2),
+                    columns: columns
+                )
                 
                 MyTicketsView(viewModel: MyTicketsViewModel(draw: viewModel.draw))
                 
@@ -63,6 +35,69 @@ struct DrawDetailView: View {
         .background(Color(.systemGroupedBackground))
     }
 }
+
+// MARK: - DrawInfoView
+
+struct DrawInfoView: View {
+    let draw: Draw
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(draw.gameName)
+                .font(.largeTitle)
+                .fontWeight(.bold)
+            
+            Text("Draw Date: \(draw.drawDate)")
+                .font(.subheadline)
+                .foregroundColor(.gray)
+        }
+        .padding(.bottom, 20)
+    }
+}
+
+// MARK: - BallsSectionView
+
+struct BallsSectionView: View {
+    let title: String
+    let balls: [String]
+    let ballColor: Color
+    let backgroundColor: Color
+    let columns: [GridItem]
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text(title)
+                .font(.headline)
+            
+            LazyVGrid(columns: columns, spacing: 12) {
+                ForEach(balls, id: \.self) { ball in
+                    BallView(ball: ball, ballColor: ballColor, backgroundColor: backgroundColor)
+                }
+            }
+        }
+        .padding()
+    }
+}
+
+// MARK: - BallView
+
+struct BallView: View {
+    let ball: String
+    let ballColor: Color
+    let backgroundColor: Color
+    
+    var body: some View {
+        Text(ball)
+            .font(.title2)
+            .fontWeight(.semibold)
+            .frame(minWidth: 60, minHeight: 60)
+            .background(backgroundColor)
+            .foregroundColor(ballColor)
+            .clipShape(Circle())
+    }
+}
+
+// MARK: - Preview
 
 struct DrawDetailView_Previews: PreviewProvider {
     static var previews: some View {
