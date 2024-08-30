@@ -17,8 +17,8 @@ class DataManagerTests: XCTestCase {
     func testSaveDraws() {
         // Given
         let draws = [
-            "Lotto": [draw(id: "1", gameName: "Lotto", drawDate: "2023-08-29T12:00:00Z")],
-            "Lotto Plus": [draw(id: "2", gameName: "Lotto Plus", drawDate: "2023-08-25T12:00:00Z")]
+            "Lotto": [DrawTestHelper.draw(id: "1", gameName: "Lotto", drawDate: "2023-08-29T12:00:00Z")],
+            "Lotto Plus": [DrawTestHelper.draw(id: "2", gameName: "Lotto Plus", drawDate: "2023-08-25T12:00:00Z")]
         ]
         
         // When
@@ -50,7 +50,7 @@ class DataManagerTests: XCTestCase {
         // Given
         let viewModel = DataManager.shared
         let draws = [
-            "Lotto": [draw(id: "1", gameName: "Lotto", drawDate: "2023-08-29T12:00:00Z")]
+            "Lotto": [DrawTestHelper.draw(id: "1", gameName: "Lotto", drawDate: "2023-08-29T12:00:00Z")]
         ]
         
         do {
@@ -63,24 +63,5 @@ class DataManagerTests: XCTestCase {
         } catch {
             XCTFail("Error occurred during saving or loading: \(error)")
         }
-    }
-}
-
-extension DataManagerTests {
-    func draw(id: String, gameName: String, drawDate: String) -> Draw {
-        return Draw(
-            gameId: 1,
-            gameName: gameName,
-            id: id,
-            drawDate: drawDate,
-            number1: "52",
-            number2: "16",
-            number3: "23",
-            number4: "2",
-            number5: "47",
-            number6: "44",
-            bonusBalls: ["14", "28"],
-            topPrize: 4000000000
-        )
     }
 }

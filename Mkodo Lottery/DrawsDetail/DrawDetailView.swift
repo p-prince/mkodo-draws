@@ -96,26 +96,3 @@ struct BallView: View {
             .clipShape(Circle())
     }
 }
-
-// MARK: - Preview
-
-struct DrawDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        let sampleDraw = Draw(
-            gameId: 1,
-            gameName: "Lotto",
-            id: "1",
-            drawDate: "2023-05-15",
-            number1: "2",
-            number2: "16",
-            number3: "23",
-            number4: "44",
-            number5: "47",
-            number6: "52",
-            bonusBalls: ["14"],
-            topPrize: 4000000000
-        )
-        let viewModel = DrawDetailViewModel(draw: sampleDraw)
-        DrawDetailView(viewModel: viewModel)
-    }
-}

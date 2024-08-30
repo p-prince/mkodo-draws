@@ -2,31 +2,9 @@ import XCTest
 @testable import Mkodo_Lottery
 
 class MyTicketsViewModelTests: XCTestCase {
-    
-    // Helper method to create a Draw object
-    private func createDraw(
-        number1: String, number2: String, number3: String,
-        number4: String, number5: String, number6: String,
-        bonusBalls: [String]? = nil
-    ) -> Draw {
-        return Draw(
-            gameId: 1,
-            gameName: "Lotto",
-            id: "1",
-            drawDate: "2023-05-15",
-            number1: number1,
-            number2: number2,
-            number3: number3,
-            number4: number4,
-            number5: number5,
-            number6: number6,
-            bonusBalls: bonusBalls,
-            topPrize: 1000000
-        )
-    }
-    
+
     func testGenerateTicket() {
-        let draw = createDraw(number1: "1", number2: "2", number3: "3", number4: "4", number5: "5", number6: "6")
+        let draw = DrawTestHelper.draw()
         let viewModel = MyTicketsViewModel(draw: draw)
         
         XCTAssertEqual(viewModel.ticketNumbers.count, 6, "Ticket should contain exactly 6 numbers")
@@ -42,7 +20,7 @@ class MyTicketsViewModelTests: XCTestCase {
     
     func testCheckIfWinningTicket() {
         // Winning ticket
-        let draw = createDraw(number1: "1", number2: "2", number3: "3", number4: "4", number5: "5", number6: "6")
+        let draw = DrawTestHelper.draw()
         let viewModel = MyTicketsViewModel(draw: draw)
         viewModel.ticketNumbers = ["1", "2", "3", "4", "5", "6"]
         viewModel.checkIfWinningTicket()
@@ -58,7 +36,7 @@ class MyTicketsViewModelTests: XCTestCase {
     
     // Test matching numbers logic
     func testIsNumberMatching() {
-        let draw = createDraw(number1: "1", number2: "2", number3: "3", number4: "4", number5: "5", number6: "6", bonusBalls: ["7", "8"])
+        let draw = DrawTestHelper.draw(bonusBalls: ["7" ,"8"])
         let viewModel = MyTicketsViewModel(draw: draw)
         
         XCTAssertTrue(viewModel.isNumberMatching("1"), "Number 1 should be recognized as a matching number")
@@ -68,7 +46,7 @@ class MyTicketsViewModelTests: XCTestCase {
     
     // Test that the ViewModel correctly handles the case where bonus balls are present
     func testCheckIfWinningTicketWithBonusBalls() {
-        let draw = createDraw(number1: "1", number2: "2", number3: "3", number4: "4", number5: "5", number6: "6", bonusBalls: ["7", "8"])
+        let draw = DrawTestHelper.draw(bonusBalls: ["7" ,"8"])
         let viewModel = MyTicketsViewModel(draw: draw)
         
         viewModel.ticketNumbers = ["1", "2", "3", "4", "5", "6"]
@@ -82,7 +60,7 @@ class MyTicketsViewModelTests: XCTestCase {
     
     // Test edge cases like a ticket with no numbers matching
     func testNoMatchingNumbers() {
-        let draw = createDraw(number1: "1", number2: "2", number3: "3", number4: "4", number5: "5", number6: "6")
+        let draw = DrawTestHelper.draw()
         let viewModel = MyTicketsViewModel(draw: draw)
         
         viewModel.ticketNumbers = ["10", "11", "12", "13", "14", "15"]

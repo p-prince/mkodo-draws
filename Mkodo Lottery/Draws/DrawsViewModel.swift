@@ -34,7 +34,7 @@ class DrawsViewModel: DrawsViewModelType {
             }
         } catch {
             await MainActor.run {
-                self.errorMessage = error.localizedDescription
+                self.errorMessage = DrawServiceError.dataLoadingFailed(error).errorDescription
             }
         }
     }
@@ -51,7 +51,7 @@ class DrawsViewModel: DrawsViewModelType {
             
         } catch {
             await MainActor.run {
-                self.errorMessage = "Error fetching draws: \(error.localizedDescription)"
+                self.errorMessage = DrawServiceError.networkError(error).errorDescription
             }
         }
     }
