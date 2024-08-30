@@ -1,5 +1,4 @@
 import SwiftUI
-import Combine
 
 protocol DrawsViewModelType: ObservableObject {
     var groupedDraws: [String: [Draw]] { get }
@@ -14,7 +13,6 @@ class DrawsViewModel: DrawsViewModelType {
 
     private var drawsService: DrawsService
     private var dataManager: DataManagerType
-    private var cancellables = Set<AnyCancellable>()
     private var cacheKey: String
     
     init(drawsService: DrawsService, dataManager: DataManagerType = DataManager.shared, cacheKey: String) {

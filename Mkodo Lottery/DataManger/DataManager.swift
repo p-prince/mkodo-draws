@@ -33,7 +33,7 @@ class DataManager: DataManagerType {
             let groupedDraws = try JSONDecoder().decode([String: [Draw]].self, from: data)
             return groupedDraws
         } catch {
-            throw DataManagerError.encodingFailed(error)
+            throw DataManagerError.decodingFailed(error)
         }
     }
     
