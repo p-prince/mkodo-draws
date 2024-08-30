@@ -3,7 +3,7 @@ import SwiftUI
 struct MyTicketsView: View {
     @ObservedObject var viewModel: MyTicketsViewModel
     private let columns: [GridItem] = Array(repeating: GridItem(.flexible()), count: 3)
-
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             Text("My Ticket")
@@ -12,10 +12,33 @@ struct MyTicketsView: View {
             TicketNumbersGridView(ticketNumbers: viewModel.ticketNumbers,
                                   isNumberMatching: viewModel.isNumberMatching(_:),
                                   columns: columns)
-            
-            WinningStatusView(isWinningTicket: viewModel.isWinningTicket)
+            WinningBannerView(isWinningTicket: viewModel.isWinningTicket)
         }
         .padding()
+        .background(viewModel.isWinningTicket ? Color.green.opacity(0.2) : Color.gray.opacity(0.1))
+        .cornerRadius(20)
+    }
+}
+
+// MARK: - WinningBannerView
+
+struct WinningBannerView: View {
+    let isWinningTicket: Bool
+    
+    var body: some View {
+        VStack {
+            HStack {
+                Text(isWinningTicket ? "🎉 Congratulations! You won!" : "😢 Sorry, better luck next time!")
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(isWinningTicket ? Color.green : Color.red)
+                    .cornerRadius(10)
+                
+                Spacer()
+            }
+            .padding()
+        }
     }
 }
 
@@ -25,7 +48,7 @@ struct TicketNumbersGridView: View {
     let ticketNumbers: [String]
     let isNumberMatching: (String) -> Bool
     let columns: [GridItem]
-
+    
     var body: some View {
         LazyVGrid(columns: columns, spacing: 10) {
             ForEach(ticketNumbers, id: \.self) { ball in
@@ -40,7 +63,7 @@ struct TicketNumbersGridView: View {
 struct TicketNumberView: View {
     let ball: String
     let isMatching: Bool
-
+    
     var body: some View {
         Text(ball)
             .font(.title2)
@@ -49,26 +72,6 @@ struct TicketNumberView: View {
             .background(isMatching ? Color.green : Color.purple.opacity(0.1))
             .foregroundColor(isMatching ? Color.white : Color.purple)
             .clipShape(Circle())
-    }
-}
-
-// MARK: - WinningStatusView
-
-struct WinningStatusView: View {
-    let isWinningTicket: Bool
-
-    var body: some View {
-        if isWinningTicket {
-            Text("Congratulations! This is a winning ticket!")
-                .font(.title3)
-                .foregroundColor(.green)
-                .bold()
-        } else {
-            Text("Sorry, this ticket did not win.")
-                .font(.title3)
-                .foregroundColor(.red)
-                .bold()
-        }
     }
 }
 

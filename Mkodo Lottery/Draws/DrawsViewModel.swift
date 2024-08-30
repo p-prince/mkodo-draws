@@ -5,7 +5,7 @@ protocol DrawsViewModelType: ObservableObject {
     var groupedDraws: [String: [Draw]] { get }
     var errorMessage: String? { get }
 
-    func fetchDraws()
+    func fetchDraws() async
 }
 
 class DrawsViewModel: DrawsViewModelType {
@@ -23,42 +23,39 @@ class DrawsViewModel: DrawsViewModelType {
         self.cacheKey = cacheKey
     }
     
-    func fetchDraws() {
+    func fetchDraws() async {
         do {
             if let cachedDraws = try dataManager.loadCachedDraws(forKey: cacheKey) {
-                self.groupedDraws = cachedDraws
+                await MainActor.run {
+                    self.groupedDraws = cachedDraws
+                }
             } else {
-                fetchDrawsFromNetwork()
+                await fetchDrawsFromNetwork()
             }
         } catch {
-            self.errorMessage = error.localizedDescription
+            await MainActor.run {
+                self.errorMessage = error.localizedDescription
+            }
         }
     }
     
-    private func fetchDrawsFromNetwork() {
-        drawsService.fetchDraws()
-            .map { draws in
-                self.groupAndSortDraws(draws)
+    private func fetchDrawsFromNetwork() async {
+        do {
+            let draws = try await drawsService.fetchDraws()
+            let groupedDraws = self.groupAndSortDraws(draws)
+            try self.dataManager.saveDraws(groupedDraws, forKey: self.cacheKey)
+            
+            await MainActor.run {
+                self.groupedDraws = groupedDraws
             }
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { completion in
-                switch completion {
-                case .failure(let error):
-                    self.errorMessage = "Error fetching draws: \(error.localizedDescription)"
-                case .finished:
-                    break
-                }
-            }, receiveValue: { groupedDraws in
-                do {
-                    self.groupedDraws = groupedDraws
-                    try self.dataManager.saveDraws(groupedDraws, forKey: self.cacheKey)
-                } catch {
-                    self.errorMessage = error.localizedDescription
-                }
-            })
-            .store(in: &cancellables)
+            
+        } catch {
+            await MainActor.run {
+                self.errorMessage = "Error fetching draws: \(error.localizedDescription)"
+            }
+        }
     }
-    
+
     private func groupAndSortDraws(_ draws: [Draw]) -> [String: [Draw]] {
         // Group by game name
         var groupedDraws = Dictionary(grouping: draws, by: { $0.gameName })

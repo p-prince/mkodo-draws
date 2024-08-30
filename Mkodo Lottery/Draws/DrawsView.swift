@@ -22,7 +22,9 @@ struct DrawsView: View {
             }
         }
         .onAppear {
-            viewModel.fetchDraws()
+            Task {
+                await viewModel.fetchDraws()
+            }
         }
     }
 }

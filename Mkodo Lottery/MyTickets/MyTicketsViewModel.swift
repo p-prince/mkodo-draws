@@ -28,6 +28,7 @@ class MyTicketsViewModel: ObservableObject {
         while numbers.count < 6 {
             numbers.insert(Int.random(in: 1...59))
         }
+
         ticketNumbers = numbers.sorted().map { String($0) }
     }
     

@@ -2,7 +2,7 @@ import Combine
 import Foundation
 
 struct MockDrawsService: DrawsService {
-    func fetchDraws() -> AnyPublisher<[Draw], Error> {
+    func fetchDraws() async throws -> [Draw] {
         let mockDraws = [
             Draw(
                 gameId: 1,
@@ -45,8 +45,6 @@ struct MockDrawsService: DrawsService {
                 topPrize: 1000)
         ]
         
-        return Just(mockDraws)
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
+        return mockDraws
     }
 }

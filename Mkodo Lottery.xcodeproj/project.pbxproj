@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A3001D722C81CE65002F4AB8 /* DrawServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3001D712C81CE65002F4AB8 /* DrawServiceError.swift */; };
 		A3299A552C80AC1F00F6612F /* DataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3299A542C80AC1F00F6612F /* DataManagerTests.swift */; };
 		A33EA8EF2C7DEEB4002BC5C2 /* Mkodo_LotteryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33EA8EE2C7DEEB4002BC5C2 /* Mkodo_LotteryApp.swift */; };
 		A33EA8F12C7DEEB4002BC5C2 /* DrawsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33EA8F02C7DEEB4002BC5C2 /* DrawsView.swift */; };
@@ -51,6 +52,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A3001D712C81CE65002F4AB8 /* DrawServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawServiceError.swift; sourceTree = "<group>"; };
 		A3299A542C80AC1F00F6612F /* DataManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManagerTests.swift; sourceTree = "<group>"; };
 		A33EA8EB2C7DEEB4002BC5C2 /* Mkodo Lottery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mkodo Lottery.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A33EA8EE2C7DEEB4002BC5C2 /* Mkodo_LotteryApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mkodo_LotteryApp.swift; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 				A33EA91C2C7DFA3C002BC5C2 /* ServiceFactory.swift */,
 				A33EA91E2C7DFA65002BC5C2 /* LocalDrawService.swift */,
 				A33EA9202C7DFA86002BC5C2 /* RemoteUserService.swift */,
+				A3001D712C81CE65002F4AB8 /* DrawServiceError.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -370,6 +373,7 @@
 				A33EA8EF2C7DEEB4002BC5C2 /* Mkodo_LotteryApp.swift in Sources */,
 				A33EA9192C7DF7ED002BC5C2 /* DrawsService.swift in Sources */,
 				A37C9A5F2C7F2FC700D81CDB /* MyTicketsView.swift in Sources */,
+				A3001D722C81CE65002F4AB8 /* DrawServiceError.swift in Sources */,
 				A33EA91F2C7DFA65002BC5C2 /* LocalDrawService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
