@@ -12,7 +12,6 @@ class DrawsViewModelTests: XCTestCase {
         mockDrawsService = MockDrawsService()
         viewModel = DrawsViewModel(drawsService: mockDrawsService, cacheKey: testCacheKey)
         DataManager.shared.removeCachedDraws(forKey: testCacheKey)
-        cancellables = []
     }
     
     override func tearDown() {
