@@ -24,10 +24,14 @@ class DrawsViewModel: DrawsViewModelType {
     }
     
     func fetchDraws() {
-        if let cachedDraws = dataManager.loadCachedDraws(forKey: cacheKey) {
-            self.groupedDraws = cachedDraws
-        } else {
-            fetchDrawsFromNetwork()
+        do {
+            if let cachedDraws = try dataManager.loadCachedDraws(forKey: cacheKey) {
+                self.groupedDraws = cachedDraws
+            } else {
+                fetchDrawsFromNetwork()
+            }
+        } catch {
+            self.errorMessage = error.localizedDescription
         }
     }
     
@@ -45,8 +49,12 @@ class DrawsViewModel: DrawsViewModelType {
                     break
                 }
             }, receiveValue: { groupedDraws in
-                self.groupedDraws = groupedDraws
-                self.dataManager.saveDraws(groupedDraws, forKey: self.cacheKey)
+                do {
+                    self.groupedDraws = groupedDraws
+                    try self.dataManager.saveDraws(groupedDraws, forKey: self.cacheKey)
+                } catch {
+                    self.errorMessage = error.localizedDescription
+                }
             })
             .store(in: &cancellables)
     }

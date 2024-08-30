@@ -32,16 +32,10 @@ class MyTicketsViewModel: ObservableObject {
     }
     
     func checkIfWinningTicket() {
-        let ticketSet = Set(ticketNumbers.compactMap { $0 })
-        let mainDrawSet = Set(mainDrawNumbers.compactMap { $0 })
-        let matchingNumbers = ticketSet.intersection(mainDrawSet)
-        
-        // Define your winning logic:
-        // Example: For the jackpot, you must match all 6 main numbers
-        isWinningTicket = (matchingNumbers.count == mainDrawSet.count)
-        
-        // Additional logic can be added for lower-tier prizes
-        // Example: if matchingNumbers.count == 5 && some bonus ball matches, that could be a lower-tier prize
+        let tickets = ticketNumbers.compactMap { $0 }
+        let mainDraws = mainDrawNumbers.compactMap { $0 }
+
+        isWinningTicket = mainDraws == tickets
     }
     
     func isNumberMatching(_ number: String) -> Bool {

@@ -22,22 +22,28 @@ class DataManagerTests: XCTestCase {
         ]
         
         // When
-        DataManager.shared.saveDraws(draws, forKey: testCacheKey)
-        
-        // Then
-        let loadedDraws = DataManager.shared.loadCachedDraws(forKey: testCacheKey)
-
-        XCTAssertNotNil(loadedDraws?["Lotto"])
-        XCTAssertEqual(loadedDraws?["Lotto"]?.first?.id, "1")
-        XCTAssertEqual(loadedDraws?["Lotto Plus"]?.first?.id, "2")
+        do {
+            try DataManager.shared.saveDraws(draws, forKey: testCacheKey)
+            // Then
+            let loadedDraws = try DataManager.shared.loadCachedDraws(forKey: testCacheKey)
+            
+            XCTAssertNotNil(loadedDraws?["Lotto"])
+            XCTAssertEqual(loadedDraws?["Lotto"]?.first?.id, "1")
+            XCTAssertEqual(loadedDraws?["Lotto Plus"]?.first?.id, "2")
+        } catch {
+            XCTFail("Saving or loading draws failed with error: \(error)")
+        }
     }
     
     func testLoadCachedDrawsReturnsNilWhenNoData() {
         // When
-        let loadedDraws = DataManager.shared.loadCachedDraws(forKey: testCacheKey)
-        
-        // Then
-        XCTAssertNil(loadedDraws)
+        do {
+            let loadedDraws = try DataManager.shared.loadCachedDraws(forKey: testCacheKey)
+            // Then
+            XCTAssertNil(loadedDraws)
+        } catch {
+            XCTFail("Loading draws failed with error: \(error)")
+        }
     }
     
     func testRemoveCachedDraws() {
@@ -46,14 +52,17 @@ class DataManagerTests: XCTestCase {
         let draws = [
             "Lotto": [draw(id: "1", gameName: "Lotto", drawDate: "2023-08-29T12:00:00Z")]
         ]
-        viewModel.saveDraws(draws, forKey: testCacheKey)
         
-        // When
-        viewModel.removeCachedDraws(forKey: testCacheKey)
-        
-        // Then
-        let loadedDraws = viewModel.loadCachedDraws(forKey: testCacheKey)
-        XCTAssertNil(loadedDraws)
+        do {
+            try viewModel.saveDraws(draws, forKey: testCacheKey)
+            // When
+            viewModel.removeCachedDraws(forKey: testCacheKey)
+            // Then
+            let loadedDraws = try viewModel.loadCachedDraws(forKey: testCacheKey)
+            XCTAssertNil(loadedDraws)
+        } catch {
+            XCTFail("Error occurred during saving or loading: \(error)")
+        }
     }
 }
 
@@ -75,4 +84,3 @@ extension DataManagerTests {
         )
     }
 }
-
