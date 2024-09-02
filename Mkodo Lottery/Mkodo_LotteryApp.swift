@@ -11,10 +11,11 @@ class AppConfig: ObservableObject {
 @main
 struct Mkodo_LotteryApp: App {
     @StateObject private var appConfig = AppConfig()
+    private let cacheKey = "cacheKey"
 
     var body: some Scene {
         WindowGroup {
-            DrawsView(viewModel: DrawsViewModel(drawsService: appConfig.userService , cacheKey: "cacheKey"))
+            DrawsView(viewModel: DrawsViewModel(drawsService: appConfig.userService , cacheKey: cacheKey))
                 .environmentObject(appConfig)
         }
     }
