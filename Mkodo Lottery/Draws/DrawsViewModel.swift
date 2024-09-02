@@ -22,36 +22,34 @@ class DrawsViewModel: DrawsViewModelType {
     }
     
     func fetchDraws() async {
-        do {
-            if let cachedDraws = try dataManager.loadCachedDraws(forKey: cacheKey) {
-                await MainActor.run {
-                    self.groupedDraws = cachedDraws
-                }
-            } else {
-                await fetchDrawsFromNetwork()
-            }
-        } catch {
-            await MainActor.run {
-                self.errorMessage = DrawServiceError.dataLoadingFailed(error).errorDescription
-            }
+        if let cachedDraws = try? dataManager.loadCachedDraws(forKey: cacheKey) {
+            await updateUI(with: cachedDraws)
+            return
         }
+
+        await fetchDrawsFromNetwork()
     }
-    
+
     private func fetchDrawsFromNetwork() async {
         do {
             let draws = try await drawsService.fetchDraws()
-            let groupedDraws = self.groupAndSortDraws(draws)
-            try self.dataManager.saveDraws(groupedDraws, forKey: self.cacheKey)
+            let groupedDraws = groupAndSortDraws(draws)
             
-            await MainActor.run {
-                self.groupedDraws = groupedDraws
-            }
-            
+            try? dataManager.saveDraws(groupedDraws, forKey: cacheKey)
+            await updateUI(with: groupedDraws)
         } catch {
-            await MainActor.run {
-                self.errorMessage = DrawServiceError.networkError(error).errorDescription
-            }
+            await handleFetchError(DrawServiceError.networkError(error))
         }
+    }
+
+    @MainActor
+    private func updateUI(with groupedDraws: [String: [Draw]]) {
+        self.groupedDraws = groupedDraws
+    }
+
+    @MainActor
+    private func handleFetchError(_ error: DrawServiceError) {
+        self.errorMessage = error.errorDescription
     }
 
     private func groupAndSortDraws(_ draws: [Draw]) -> [String: [Draw]] {
