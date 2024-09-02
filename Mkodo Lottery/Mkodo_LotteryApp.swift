@@ -15,7 +15,7 @@ struct Mkodo_LotteryApp: App {
 
     var body: some Scene {
         WindowGroup {
-            DrawsView(viewModel: DrawsViewModel(drawsService: appConfig.userService , cacheKey: cacheKey))
+            DrawsView(viewModel: DrawsViewModel(drawsService: appConfig.userService , cacheKey: CacheKeys.lotteryDraws))
                 .environmentObject(appConfig)
         }
     }

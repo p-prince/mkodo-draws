@@ -32,6 +32,7 @@
 		A37C9A612C7F304B00D81CDB /* MyTicketsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37C9A602C7F304B00D81CDB /* MyTicketsViewModel.swift */; };
 		A37C9A642C7F3F5800D81CDB /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37C9A632C7F3F5800D81CDB /* DataManager.swift */; };
 		A37C9A662C809B0300D81CDB /* MyTicketsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37C9A652C809B0300D81CDB /* MyTicketsViewModelTests.swift */; };
+		A3E16A2D2C861F6200143BF8 /* CacheKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E16A2C2C861F6200143BF8 /* CacheKeys.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +81,7 @@
 		A37C9A602C7F304B00D81CDB /* MyTicketsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTicketsViewModel.swift; sourceTree = "<group>"; };
 		A37C9A632C7F3F5800D81CDB /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		A37C9A652C809B0300D81CDB /* MyTicketsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTicketsViewModelTests.swift; sourceTree = "<group>"; };
+		A3E16A2C2C861F6200143BF8 /* CacheKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheKeys.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -216,6 +218,7 @@
 			isa = PBXGroup;
 			children = (
 				A33EA91A2C7DF978002BC5C2 /* DrawModel.swift */,
+				A3E16A2C2C861F6200143BF8 /* CacheKeys.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -370,6 +373,7 @@
 				A33EA9342C7E28AD002BC5C2 /* DrawDetailViewModel.swift in Sources */,
 				A33EA9292C7E2050002BC5C2 /* DrawDetailView.swift in Sources */,
 				A33EA9212C7DFA86002BC5C2 /* RemoteUserService.swift in Sources */,
+				A3E16A2D2C861F6200143BF8 /* CacheKeys.swift in Sources */,
 				A33EA8EF2C7DEEB4002BC5C2 /* Mkodo_LotteryApp.swift in Sources */,
 				A33EA9192C7DF7ED002BC5C2 /* DrawsService.swift in Sources */,
 				A37C9A5F2C7F2FC700D81CDB /* MyTicketsView.swift in Sources */,
