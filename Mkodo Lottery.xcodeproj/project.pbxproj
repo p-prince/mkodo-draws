@@ -213,6 +213,7 @@
 				A33EA91E2C7DFA65002BC5C2 /* LocalDrawService.swift */,
 				A33EA9202C7DFA86002BC5C2 /* RemoteUserService.swift */,
 				A3001D712C81CE65002F4AB8 /* DrawServiceError.swift */,
+				A3E16A2C2C861F6200143BF8 /* CacheKeys.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -221,7 +222,6 @@
 			isa = PBXGroup;
 			children = (
 				A33EA91A2C7DF978002BC5C2 /* DrawModel.swift */,
-				A3E16A2C2C861F6200143BF8 /* CacheKeys.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
