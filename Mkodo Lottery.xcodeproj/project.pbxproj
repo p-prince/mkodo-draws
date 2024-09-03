@@ -20,7 +20,7 @@
 		A33EA91B2C7DF978002BC5C2 /* DrawModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33EA91A2C7DF978002BC5C2 /* DrawModel.swift */; };
 		A33EA91D2C7DFA3C002BC5C2 /* ServiceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33EA91C2C7DFA3C002BC5C2 /* ServiceFactory.swift */; };
 		A33EA91F2C7DFA65002BC5C2 /* LocalDrawService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33EA91E2C7DFA65002BC5C2 /* LocalDrawService.swift */; };
-		A33EA9212C7DFA86002BC5C2 /* RemoteUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33EA9202C7DFA86002BC5C2 /* RemoteUserService.swift */; };
+		A33EA9212C7DFA86002BC5C2 /* RemoteDrawService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33EA9202C7DFA86002BC5C2 /* RemoteDrawService.swift */; };
 		A33EA9232C7DFE34002BC5C2 /* draws.json in Resources */ = {isa = PBXBuildFile; fileRef = A33EA9222C7DFE34002BC5C2 /* draws.json */; };
 		A33EA9252C7E0025002BC5C2 /* DrawsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33EA9242C7E0025002BC5C2 /* DrawsViewModel.swift */; };
 		A33EA9272C7E111C002BC5C2 /* DrawsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33EA9262C7E111C002BC5C2 /* DrawsViewModelTests.swift */; };
@@ -70,7 +70,7 @@
 		A33EA91A2C7DF978002BC5C2 /* DrawModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawModel.swift; sourceTree = "<group>"; };
 		A33EA91C2C7DFA3C002BC5C2 /* ServiceFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceFactory.swift; sourceTree = "<group>"; };
 		A33EA91E2C7DFA65002BC5C2 /* LocalDrawService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDrawService.swift; sourceTree = "<group>"; };
-		A33EA9202C7DFA86002BC5C2 /* RemoteUserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteUserService.swift; sourceTree = "<group>"; };
+		A33EA9202C7DFA86002BC5C2 /* RemoteDrawService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteDrawService.swift; sourceTree = "<group>"; };
 		A33EA9222C7DFE34002BC5C2 /* draws.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = draws.json; sourceTree = "<group>"; };
 		A33EA9242C7E0025002BC5C2 /* DrawsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawsViewModel.swift; sourceTree = "<group>"; };
 		A33EA9262C7E111C002BC5C2 /* DrawsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawsViewModelTests.swift; sourceTree = "<group>"; };
@@ -211,7 +211,7 @@
 				A33EA9182C7DF7ED002BC5C2 /* DrawsService.swift */,
 				A33EA91C2C7DFA3C002BC5C2 /* ServiceFactory.swift */,
 				A33EA91E2C7DFA65002BC5C2 /* LocalDrawService.swift */,
-				A33EA9202C7DFA86002BC5C2 /* RemoteUserService.swift */,
+				A33EA9202C7DFA86002BC5C2 /* RemoteDrawService.swift */,
 				A3001D712C81CE65002F4AB8 /* DrawServiceError.swift */,
 				A3E16A2C2C861F6200143BF8 /* CacheKeys.swift */,
 			);
@@ -375,7 +375,7 @@
 				A33EA91B2C7DF978002BC5C2 /* DrawModel.swift in Sources */,
 				A33EA9342C7E28AD002BC5C2 /* DrawDetailViewModel.swift in Sources */,
 				A33EA9292C7E2050002BC5C2 /* DrawDetailView.swift in Sources */,
-				A33EA9212C7DFA86002BC5C2 /* RemoteUserService.swift in Sources */,
+				A33EA9212C7DFA86002BC5C2 /* RemoteDrawService.swift in Sources */,
 				A3E16A2D2C861F6200143BF8 /* CacheKeys.swift in Sources */,
 				A33EA8EF2C7DEEB4002BC5C2 /* Mkodo_LotteryApp.swift in Sources */,
 				A33EA9192C7DF7ED002BC5C2 /* DrawsService.swift in Sources */,

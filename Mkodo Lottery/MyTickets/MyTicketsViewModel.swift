@@ -6,6 +6,7 @@ protocol MyTicketsViewModelType: ObservableObject {
     var isWinningTicket: Bool { get }
     
     func isNumberMatching(_ number: String) -> Bool
+    func checkIfWinningTicket()
 }
 
 class MyTicketsViewModel: MyTicketsViewModelType {
@@ -39,7 +40,7 @@ class MyTicketsViewModel: MyTicketsViewModelType {
         ticketNumbers = numbers.sorted().map { String($0) }
     }
     
-    private func checkIfWinningTicket() {
+    func checkIfWinningTicket() {
         let tickets = ticketNumbers.compactMap { $0 }
         let mainDraws = mainDrawNumbers.compactMap { $0 }
 

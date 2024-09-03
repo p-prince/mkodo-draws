@@ -8,7 +8,7 @@ protocol DrawDetailViewModelType: ObservableObject {
     func bonusBalls() -> [String]
 }
 
-class DrawDetailViewModel: ObservableObject {
+class DrawDetailViewModel: DrawDetailViewModelType {
     @Published var draw: Draw
     
     init(draw: Draw) {

@@ -6,12 +6,12 @@ enum ServiceType {
 }
 
 class ServiceFactory {
-    static func createUserService(type: ServiceType) -> DrawsService {
+    static func createDrawsService(type: ServiceType) -> DrawsService {
         switch type {
         case .local:
             return LocalDrawService()
         case .remote:
-            return RemoteUserService()
+            return RemoteDrawService()
         }
     }
 }
