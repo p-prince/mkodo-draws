@@ -11,7 +11,6 @@ class DrawsViewModelTests: XCTestCase {
         super.setUp()
         mockDrawsService = MockDrawsService()
         viewModel = DrawsViewModel(drawsService: mockDrawsService, cacheKey: testCacheKey)
-        DataManager.shared.removeCachedDraws(forKey: testCacheKey)
     }
     
     override func tearDown() {
@@ -35,14 +34,17 @@ class DrawsViewModelTests: XCTestCase {
     }
 
     func testFetchDrawsUsesCacheWhenAvailable() async {
+        let mockDataManager = MockDataManager()
         let cachedDraws = [
             "GameA": [DrawTestHelper.draw(id: "1", gameName: "GameA", drawDate: "2023-08-29T12:00:00Z")],
             "GameB": [DrawTestHelper.draw(id: "2", gameName: "GameB", drawDate: "2023-08-28T12:00:00Z")]
         ]
 
-        let viewModel = DrawsViewModel(drawsService: MockDrawsService(), cacheKey: testCacheKey)
+        mockDataManager.storedDraws = cachedDraws
 
-        try? DataManager.shared.saveDraws(cachedDraws, forKey: testCacheKey)
+        let viewModel = DrawsViewModel(drawsService: MockDrawsService(), dataManager: mockDataManager, cacheKey: testCacheKey)
+
+        
         await viewModel.fetchDraws()
         
         XCTAssertEqual(viewModel.groupedDraws.count, 2)

@@ -1,7 +1,14 @@
 import SwiftUI
 import Combine
 
-class MyTicketsViewModel: ObservableObject {
+protocol MyTicketsViewModelType: ObservableObject {
+    var ticketNumbers: [String] { get }
+    var isWinningTicket: Bool { get }
+    
+    func isNumberMatching(_ number: String) -> Bool
+}
+
+class MyTicketsViewModel: MyTicketsViewModelType {
     @Published var ticketNumbers: [String] = []
     @Published var isWinningTicket: Bool = false
     
@@ -23,7 +30,7 @@ class MyTicketsViewModel: ObservableObject {
         return draw.bonusBalls ?? []
     }
     
-    func generateTicket() {
+    private func generateTicket() {
         var numbers = Set<Int>()
         while numbers.count < 6 {
             numbers.insert(Int.random(in: 1...59))
@@ -32,7 +39,7 @@ class MyTicketsViewModel: ObservableObject {
         ticketNumbers = numbers.sorted().map { String($0) }
     }
     
-    func checkIfWinningTicket() {
+    private func checkIfWinningTicket() {
         let tickets = ticketNumbers.compactMap { $0 }
         let mainDraws = mainDrawNumbers.compactMap { $0 }
 

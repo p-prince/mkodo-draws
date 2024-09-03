@@ -33,6 +33,7 @@
 		A37C9A642C7F3F5800D81CDB /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37C9A632C7F3F5800D81CDB /* DataManager.swift */; };
 		A37C9A662C809B0300D81CDB /* MyTicketsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37C9A652C809B0300D81CDB /* MyTicketsViewModelTests.swift */; };
 		A3E16A2D2C861F6200143BF8 /* CacheKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E16A2C2C861F6200143BF8 /* CacheKeys.swift */; };
+		A3E16A2F2C87117700143BF8 /* MockDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E16A2E2C87117600143BF8 /* MockDataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +83,7 @@
 		A37C9A632C7F3F5800D81CDB /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		A37C9A652C809B0300D81CDB /* MyTicketsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTicketsViewModelTests.swift; sourceTree = "<group>"; };
 		A3E16A2C2C861F6200143BF8 /* CacheKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheKeys.swift; sourceTree = "<group>"; };
+		A3E16A2E2C87117600143BF8 /* MockDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,6 +182,7 @@
 				A37C9A652C809B0300D81CDB /* MyTicketsViewModelTests.swift */,
 				A3299A542C80AC1F00F6612F /* DataManagerTests.swift */,
 				A3001D732C81D508002F4AB8 /* DrawTestHelper.swift */,
+				A3E16A2E2C87117600143BF8 /* MockDataManager.swift */,
 			);
 			path = "Mkodo LotteryTests";
 			sourceTree = "<group>";
@@ -387,6 +390,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A37C9A662C809B0300D81CDB /* MyTicketsViewModelTests.swift in Sources */,
+				A3E16A2F2C87117700143BF8 /* MockDataManager.swift in Sources */,
 				A3001D742C81D508002F4AB8 /* DrawTestHelper.swift in Sources */,
 				A33EA9272C7E111C002BC5C2 /* DrawsViewModelTests.swift in Sources */,
 				A3299A552C80AC1F00F6612F /* DataManagerTests.swift in Sources */,
